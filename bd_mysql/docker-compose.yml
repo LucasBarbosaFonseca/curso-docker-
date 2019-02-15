@@ -1,0 +1,27 @@
+version: '3'
+volumes:
+  data:
+networks: 
+  db:
+services:
+  db:
+    image: mysql:5.6
+    ports: 
+      - 3306:3306
+    volumes:
+      - data:/var/lib/mysql
+    networks: 
+      - db
+    environment:
+      - MYSQL_ROOT_PASSWORD=bdagendreservas
+      - MYSQL_DATABASE=bd_agendamento_reservas
+    depends_on:
+      - interface_phpmyadmin
+  interface_phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.6
+    ports: 
+      - 80:80
+    networks:
+      - db
+    environment:
+      - PMA_ARBITRARY=1
